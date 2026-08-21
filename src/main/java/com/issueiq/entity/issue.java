@@ -2,29 +2,29 @@ package com.issueiq.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "issues")
-
-@Getter @Setter
+@Table(
+        name = "issues",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"repository", "githubIssueId"}
+                )
+        }
+)
 public class issue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "githubIssueId")
     private Long githubIssueId;
 
-    @Column(name = "issueNumber")
     private Integer issueNumber;
 
-    @Column(name = "repository")
     private String repository;
 
-    @Column(name = "title")
     private String title;
 
     @Column(columnDefinition = "TEXT")
@@ -32,5 +32,11 @@ public class issue {
 
     private String state;
 
-}
+    private String author;
 
+    private String githubUrl;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+}
